@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'students',
-    'teachers',
-    'classes',
-    'enrollments',
+    'rest_framework.authtoken',
+    'accounts.apps.AccountsConfig',
+    'students.apps.StudentsConfig',
+    'teachers.apps.TeachersConfig',
+    'classrooms.apps.ClassroomsConfig',
+    'enrollments.apps.EnrollmentsConfig',
 
 ]
 
@@ -131,4 +132,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
