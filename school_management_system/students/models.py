@@ -2,6 +2,11 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 class Student(models.Model):
+    GENDER_CHOICES =[
+        ('Male', 'Male'),
+        ('Femle', 'Female'),
+        ('Other', 'Other'),
+    ]
     user = models.OneToOneField(
         'accounts.CustomUser',
         on_delete=models.CASCADE,
@@ -13,6 +18,7 @@ class Student(models.Model):
     parent_contact = models.CharField(max_length=15, unique=True, validators=[RegexValidator(r'^\+?\d{9,15}$')])
     home_address = models.TextField()
     medical_allergies = models.TextField()
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     
     
 
