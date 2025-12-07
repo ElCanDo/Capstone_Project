@@ -1,6 +1,5 @@
 from django.db import models # Importing models module from django.db
 from django.core.validators import RegexValidator # RegexValidator for validating phone numbers
-from .models import Grade # Importing Grade model for ForeignKey relationship
 
 # Student model definition
 class Student(models.Model):
@@ -33,7 +32,7 @@ class Student(models.Model):
     medical_allergies = models.TextField()# Any known medical allergies
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)# Gender of the student
     enrollment_date = models.DateField(auto_now_add=True)# Date when the student was enrolled
-    grade = models.ForeignKey(Grade, on_delete=models.SET_NULL, null=True, related_name='students')# Grade level of the student
+    grade = models.ForeignKey('classrooms.Grade', on_delete=models.SET_NULL, null=True, related_name='students')# Grade level of the student
 
     
 

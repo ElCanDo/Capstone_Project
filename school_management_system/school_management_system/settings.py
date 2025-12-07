@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig', # Teachers management app
     'classrooms.apps.ClassroomsConfig', # Classrooms management app
     'enrollments.apps.EnrollmentsConfig', # Enrollments management app
-    'grades.apps.GradesConfig', # Grades management app
+    'grade.apps.GradeConfig', # Grades management app
 
 ]
 
