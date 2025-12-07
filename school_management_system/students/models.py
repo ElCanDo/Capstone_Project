@@ -14,12 +14,15 @@ class Student(models.Model):
     )
     date_of_birth = models.DateField()
     mother_full_name = models.CharField(max_length=200)
+    mother_contact = models.CharField(max_length=15, unique=True, validators=[RegexValidator(r'^\+?\d{9,15}$')])
     father_full_name = models.CharField(max_length=200)
-    parent_contact = models.CharField(max_length=15, unique=True, validators=[RegexValidator(r'^\+?\d{9,15}$')])
+    father_contact = models.CharField(max_length=15, unique=True, validators=[RegexValidator(r'^\+?\d{9,15}$')])
     home_address = models.TextField()
     medical_allergies = models.TextField()
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
-    
+    enrollment_date = models.DateField(auto_now_add=True)
+    grade = models.ForeignKey('Grade', on_delete=models.SET_NULL, null=True, related_name='students')
+
     
 
 
