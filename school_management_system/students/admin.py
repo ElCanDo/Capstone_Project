@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import Student
 
 # Register your models here.
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ("name", "age", "enrollment_date", "gender", "grade")
+class StudentAdmin(admin.ModelAdmin):# Custom admin configuration for Student model
+    list_display = ("name", "age", "enrollment_date", "gender", "grade") # Fields to display in admin list view
+    search_fields = ("name", "grade") # Fields to search in admin
 
-admin.site.register(Student, admin.ModelAdmin)
+admin.site.register(Student, admin.ModelAdmin) # Registering Student model with custom admin configuration
