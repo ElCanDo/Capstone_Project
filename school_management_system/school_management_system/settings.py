@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
+    'rest_framework', # Django REST framework for building APIs
+    'rest_framework.authtoken', # Token authentication for REST framework
     'accounts.apps.AccountsConfig', # Custom user model app
     'students.apps.StudentsConfig', # Students management app
     'teachers.apps.TeachersConfig', # Teachers management app
