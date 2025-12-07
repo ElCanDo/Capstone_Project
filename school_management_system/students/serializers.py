@@ -20,5 +20,5 @@ class StudentSerializer(serializers.ModelSerializer):
             'enrollment_date',
             'grade',
         ]   # Fields to be included in the serialization
-         
+
         read_only_fields = ['enrollment_date']  # enrollment_date is read-only
