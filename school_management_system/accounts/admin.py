@@ -4,20 +4,21 @@ from .models import CustomUser
 
 # CustomUser Admin Configuration
 class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ('first_name', 
-                    'last_name', 
-                    'email', 
-                    'role') # Fields to display in admin list view
-    
-    list_filter = ('role', ) # Filter by role in admin
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('role',)}),
+    )
 
-    search_fields = ('username',
-                      'email', 
-                      'first_name', 
-                      'last_name') # Fields to search in admin
-    
-    ordering = ('username',) # Default ordering in admin
+    add_fieldsets = UserAdmin.add_fieldsets + (
+        (None, {'fields': ('role',)}),
+    )
+
+    list_display = ('username', 'email', 'role', 'is_staff') #
+
+    list_filter = UserAdmin.list_filter + ('role',) # Adding role to filter options
+
+    search_fields = UserAdmin.search_fields + ('role',) # Adding role to search fields
+
+    ordering = UserAdmin.ordering # Ordering by username
 
 # Registering CustomUser model with CustomUserAdmin configuration
 admin.site.register(CustomUser, CustomUserAdmin) 

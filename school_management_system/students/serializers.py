@@ -8,17 +8,6 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = [
-            'date_of_birth',
-            'mother_full_name',
-            'mother_contact',
-            'father_full_name',
-            'father_contact',
-            'home_address',
-            'medical_allergies',
-            'gender',
-            'enrollment_date',
-            'grade',
-        ]   # Fields to be included in the serialization
+        fields = '__all__'   # All Fields to be included in the serialization
 
         read_only_fields = ['enrollment_date']  # enrollment_date is read-only

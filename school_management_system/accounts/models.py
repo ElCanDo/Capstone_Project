@@ -6,8 +6,7 @@ class CustomUser(AbstractUser):
     """
     Custom user model extending Django's AbstractUser with unique email and role fields.
     """
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=150, unique=True)
+    email = models.EmailField(unique=True)  # Unique email field
 
     ROLE_CHOICES = [
         ('student', 'Student'),
@@ -18,8 +17,7 @@ class CustomUser(AbstractUser):
     
     USERNAME_FIELD = 'username'
     
-    REQUIRED_FIELDS = ['email'] 
+    REQUIRED_FIELDS = ['email'] # Email is required for user creation
 
     def __str__(self):
         return f"{self.username} ({self.role})"
-

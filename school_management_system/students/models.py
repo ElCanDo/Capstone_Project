@@ -34,6 +34,5 @@ class Student(models.Model):
     enrollment_date = models.DateField(auto_now_add=True)# Date when the student was enrolled
     grade = models.ForeignKey('classrooms.Grade', on_delete=models.SET_NULL, null=True, related_name='students')# Grade level of the student
 
-    
-
-
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name} - ({self.role})"
