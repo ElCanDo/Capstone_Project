@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import CustomUser
 
-# Serializer for the CustomUser model
+"""Serializer for the CustomUser model"""
+
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -9,6 +10,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
                   'username', 'first_name', 
                   'last_name', 
                   'email', 
-                  'role'] # Fields to be included in the serialization
+                  'role'] 
         
-        read_only_fields = ['id', 'role'] # id and role are read-only
+        read_only_fields = ['id', 'role']

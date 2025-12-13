@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
         ('teacher', 'Teacher'),
         ('admin', 'Admin'),
     ]
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     email = models.EmailField(unique=True, blank=False, null=False)
     def __str__(self):
         return f"{self.username} ({self.role})"
