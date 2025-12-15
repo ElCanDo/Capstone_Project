@@ -12,13 +12,13 @@ from .models import CustomUser, Classroom, Teacher, Student, Enrollment, Teacher
 
 class CustomUserViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAdminUser]
     queryset = CustomUser.objects.all() 
     serializer_class = CustomUserSerializer()
 
 class ClassroomViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated], [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
     queryset = Classroom.objects.all()
     serializer_class = ClassroomSerializer
 
@@ -30,18 +30,18 @@ class TeacherViewSet(viewsets.ModelViewSet):
 
 class StudentViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated], [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
     queryset = Student.objects.all() 
     serializer_class = StudentSerializer
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated], [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
 
-class TeacherAsignViewSet(viewsets.ModelViewSet):
+class TeacherAssignViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated], [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
     queryset = TeacherAssign.objects.all()
     serializer_class = TeacherAssignSerializer
