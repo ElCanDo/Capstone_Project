@@ -16,7 +16,7 @@ ROLE_CHOICES = [
 
 class CustomUser(AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
-    email = models.EmailField(unique=True, blank=False, null=False)
+    
     def __str__(self):
         return f"{self.username} ({self.role})"
 
@@ -44,17 +44,16 @@ class Teacher(models.Model):
         on_delete=models.CASCADE,
         related_name='teacher_profile'
     )
-    full_name = models.CharField(max_length=200, null=False, blank=False, default="Unknown teacher")
+    full_name = models.CharField(max_length=100, null=False, blank=False, default="Unknown teacher")
     teacher_contact = models.CharField(max_length=15, 
                                       unique=True, 
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
-    subject_specialization = models.CharField(max_length=100)
+    subject_specialization = models.CharField(max_length=50)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="Student")
     date_hired = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.full_name} ({self.role})"
+        return f"{self.full_name} ({user.role})"
       
 
 """Student Model"""
@@ -66,17 +65,17 @@ class Student(models.Model):
         related_name='student_profile'
     )
     
-    full_name = models.CharField(max_length=200, null=False, blank=False, default="Unknown Student")
+    full_name = models.CharField(max_length=100, null=False, blank=False, default="Unknown Student")
 
     date_of_birth = models.DateField()
 
-    mother_full_name = models.CharField(max_length=200)
+    mother_full_name = models.CharField(max_length=100)
     
     mother_contact = models.CharField(max_length=15, 
                                       unique=True, 
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
     
-    father_full_name = models.CharField(max_length=200)
+    father_full_name = models.CharField(max_length=100)
 
     father_contact = models.CharField(max_length=15, 
                                       unique=True, 
@@ -105,8 +104,7 @@ class Enrollment(models.Model):
     
 
     def __str__(self):
-        return f"{self.student.full_name} - {self.classroom.name}"    
-
+        return f"{self.student.full_name} - {self.classroom.name}"
 
 class TeacherStudentAssignment(models.Model):
     teacher = models.OneToOneField(Classroom, on_delete=models.SET_NULL, related_name="teacher")
