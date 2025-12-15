@@ -50,7 +50,7 @@ class Teacher(models.Model):
                                       validators=[RegexValidator(r'^\+?\d{9,15}$')]) 
     subject_specialization = models.CharField(max_length=50)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    date_hired = models.DateField(auto_now_add=True)
+    date_employed = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.full_name} {self.role})"
@@ -102,11 +102,13 @@ class Enrollment(models.Model):
     classroom = models.OneToOneField(Classroom, on_delete=models.CASCADE, related_name='classroom_enrollments')
     date_enrolled = models.DateTimeField(auto_now_add=True)
     
-
     def __str__(self):
-        return f"{self.student.full_name} - {self.classroom.name}"
+        return f"{self.student.full_name} is enrolled into: {self.classroom.name}"
 
-class TeacherStudentAssignment(models.Model):
-    teacher = models.OneToOneField(Classroom, on_delete=models.SET_NULL, related_name="teacher")
+class TeacherAssign(models.Model):
+    teacher = models.OneToOneField(Teacher, on_delete=models.SET_NULL, related_name="teacher")
 
     classroom = models.ForeignKey(Classroom, on_delete=models.SET_NULL,)
+
+    def __str__(self):
+        return f"{self.teacher.full_name} is assigned to : {self.classroom.name}"
