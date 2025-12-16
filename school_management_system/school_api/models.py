@@ -15,8 +15,13 @@ ROLE_CHOICES = [
     ]
 
 class CustomUser(AbstractUser):
+    # email= models.EmailField(unique=True, max_length=)
+    username = models.CharField(unique=True, max_length=50)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
     
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = []
+
     def __str__(self):
         return f"{self.username} - ({self.role})"
 
@@ -56,11 +61,11 @@ class Teacher(models.Model):
 """Student Model"""
 
 class Student(models.Model):
-    user = models.OneToOneField(
-        CustomUser,
-        on_delete=models.CASCADE,
-        related_name='student_profile'
-    )
+    # user = models.OneToOneField(
+    #     CustomUser,
+    #     on_delete=models.CASCADE,
+    #     related_name='student_profile'
+    # )
     
     full_name = models.CharField(max_length=100, null=False, blank=False, default="Unknown Student")
 
