@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', 
-    'rest_framework.authtoken', 
-    'school_api' 
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'school_api',
 
 ]
 
@@ -130,3 +130,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'school_api.CustomUser' 
+
+from datetime import timedelta
+
+REST_FRAMEWOTRK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framewrok_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAdminUser',
+    ),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
+}
