@@ -6,6 +6,12 @@ from .serializers import (CustomUserSerializer,
                            EnrollmentSerializer, 
                            TeacherAssignSerializer)
 from .models import CustomUser, Classroom, Teacher, Student, Enrollment, TeacherAssign
+from django.http import HttpResponse
+
+
+def home(request):
+    return HttpResponse("Welcome to the School  API")
+
 
 """Viewsets For all the Models"""
 
@@ -22,11 +28,13 @@ class ClassroomViewSet(viewsets.ModelViewSet):
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all() 
     serializer_class = TeacherSerializer
+    permission_classes = [permissions.IsAdminUser]
 
 
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all() 
     serializer_class = StudentSerializer
+    permission_classes = [permissions.IsAdminUser]
 
 class EnrollmentViewSet(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()

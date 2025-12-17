@@ -8,23 +8,20 @@ GENDER_CHOICES =[
         ('O', 'Other'),
     ]
 
-ROLE_CHOICES = [
+class CustomUser(AbstractUser):
+    ROLE_CHOICES = [
         ('student', 'Student'),
         ('teacher', 'Teacher'),
         ('admin', 'Admin'),
     ]
 
-class CustomUser(AbstractUser):
-    # email= models.EmailField(unique=True, max_length=)
-    username = models.CharField(unique=True, max_length=50)
-    
-    
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+       
+    # USERNAME_FIELD = "username"
+    # REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.username
-
 
     
 """ Classroom model """
@@ -36,7 +33,6 @@ class Classroom(models.Model):
         return self.name 
  
     
-
 """Teacher Model Definition"""
 
 class Teacher(models.Model):
@@ -53,10 +49,9 @@ class Teacher(models.Model):
     subject_specialization = models.CharField(max_length=50)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     date_employed = models.DateField(auto_now_add=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
 
     def __str__(self):
-        return f"{self.full_name} {self.role})"
+        return f"{self.full_name} - {self.user.role}"
       
 
 """Student Model"""
@@ -92,26 +87,30 @@ class Student(models.Model):
 
     enrollment_date = models.DateField(auto_now_add=True)
 
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, null=True, related_name='classrooms')
-
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+    
 
     def __str__(self):
-        return f"{self.full_name} - {self.role}"
+        return f"{self.full_name} - {self.user.role}"
     
 
 class Enrollment(models.Model):
-    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name='students_enrolled')
-    classroom = models.OneToOneField(Classroom, on_delete=models.CASCADE, related_name='classroom_enrollments')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrollment')
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='enrollments')
     date_enrolled = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'classroom')
     
     def __str__(self):
         return f"{self.student.full_name} is enrolled into: {self.classroom.name}"
 
-class TeacherAssign(models.Model):
-    teacher = models.OneToOneField(Teacher, on_delete=models.CASCADE, related_name="teachers_assigned")
 
-    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE,related_name="classrooms_assigned")
+class TeacherAssign(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('teacher', 'classroom')
 
     def __str__(self):
         return f"{self.teacher.full_name} is assigned to : {self.classroom.name}"

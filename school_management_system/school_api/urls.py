@@ -18,4 +18,6 @@ router.register(r'teacher-assignments', TeacherAssignViewSet, basename='teacher-
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('', home, name='home'),
+
 ]
