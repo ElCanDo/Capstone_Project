@@ -11,7 +11,7 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     verify_password = serializers.CharField(write_only=True)
     tokens = serializers.SerializerMethodField(read_only=True)
-
+    date_of_birth = serializers.DateField(write_only=True, required=False)
     class Meta:
             model = User
             fields = ['id', 'username', 'email', 'password', 'verify_password',  'first_name', 'last_name', 'date_of_birth', 'role', 'tokens']
@@ -26,13 +26,15 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('verify_password')
         password = validated_data.pop('password')
-
+        
         user = User.objects.create_user(**validated_data, password=password)
+        date_of_birth = validated_data.pop('date_of_birth')
+
 
         if user.role == 'teacher':
-            Teacher.objects.create(user=user)
+            Teacher.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}")
         elif user.role == 'student':
-            Student.objects.create(user=user)
+            Student.objects.create(user=user, full_name=f"{user.first_name} {user.last_name}", date_of_birth=date_of_birth)
 
         return user
     
@@ -90,7 +92,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     classroom_name = serializers.CharField(source='classroom.name', read_only=True)
     class Meta:
         model = Enrollment
-        fields =['id', 'student_name', 'classroom_name', 'date_enrolled' ]
+        fields = '__all__'
         read_only_fields = ['id', 'date_enrolled']
 
 
