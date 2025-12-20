@@ -14,8 +14,7 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
             model = User
-            fields = ['id', 'username', 'email', 'password', 'verify_password', 
-                      'role', 'first_name', 'last_name', 'tokens']
+            fields = ['id', 'username', 'email', 'password', 'verify_password',  'first_name', 'last_name', 'date_of_birth', 'role', 'tokens']
             read_only_fields = ['id', 'tokens']
 
     def validate(self, data):
@@ -38,11 +37,11 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
         return user
     
 
-    def get_token(self, obj):
-        refresh_token =RefreshToken.for_user(obj)
+    def get_tokens(self, obj):
+        refresh =RefreshToken.for_user(obj)
         return {
-            'refresh': str(refresh_token),
-            'access': str(refresh_token.access_token)
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
         }    
     
 
@@ -51,7 +50,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = ['id', 'username', 'email', 'role', 'first_name', 'last_name']
 
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'role']
 
 class ClassroomSerializer(serializers.ModelSerializer):
     class Meta:
@@ -66,10 +65,10 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['id', 'date_employed']
 
-        def validate(self, user):
-            if user.role != 'teacher':
-                raise serializers.ValidationError("User must have role 'teacher'")
-            return user
+    def validate_user(self, value):
+        if value.role != 'teacher':
+            raise serializers.ValidationError("User must have role 'teacher'")
+        return value
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -79,25 +78,26 @@ class StudentSerializer(serializers.ModelSerializer):
 
         read_only_fields = ['id', 'admission_date']
 
-        def validate(self, user):
-            if user.role != 'student':
-                raise serializers.ValidationError("User must have role 'student'")
-            return user
+    def validate_user(self, value):
+        if value.role != 'student':
+            raise serializers.ValidationError("User must have role 'student'")
+        return value
 
 
 
 class EnrollmentSerializer(serializers.ModelSerializer):
-    student_name = serializers.CharField(source="student.full_name", read_only=True)
-    classroom_name = serializers.CharField(source="classroom.name", read_only=True)
+    student_name = serializers.CharField(source='student.full_name', read_only=True)
+    classroom_name = serializers.CharField(source='classroom.name', read_only=True)
     class Meta:
         model = Enrollment
         fields =['id', 'student_name', 'classroom_name', 'date_enrolled' ]
-        read_only_fields = ['id', 'enrollment_date']
+        read_only_fields = ['id', 'date_enrolled']
+
 
 class TeacherAssignSerializer(serializers.ModelSerializer):
-    teacher_full_name = serializers.CharField(source="teacher.full_name", read_only=True)
-    classroom_name = serializers.CharField(source="classroom.name", read_only=True)
+    teacher_name = serializers.CharField(source='teacher.full_name', read_only=True)
+    classroom_name = serializers.CharField(source='classroom.name', read_only=True)
     class Meta:
         model = TeacherAssign
-        fields =['id', 'teacher', 'classroom']
+        fields =['id', 'teacher', 'classroom','teacher_name', 'classroom_name']
         read_only_fields = ['id']
