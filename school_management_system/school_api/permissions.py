@@ -2,30 +2,39 @@ from rest_framework import permissions
 
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        return (request.user.is_authenticated and 
-                request.user.role =='admin'
-                )
-    
+        user = request.user
 
-# class IsTeacher(permissions.BasePermission):
-#     def has_permission(self, request, view):
-#         return request.user and not request.user.is_staff
+        if not user or not user.is_authenticated:
+            return False
 
-#     def has_object_permission(self, request, view, obj):
-#         return True
+        elif user.is_superuser:
+            return True
 
+        return user.role =='admin'
 
-# class IsStudent(permissions.BasePermission):
-#     def has_permission(self, request, view):
-#         return request.user and not request.user.is_staff
-    
-#     def has_object_permission(self, request, view, obj):
-#         return True
-    
-class IsStudent(permissions.BasePermission):
-    def has_permission(self, request, view):
-        return hasattr(request.user, 'student_profile')
 
 class IsTeacher(permissions.BasePermission):
     def has_permission(self, request, view):
-        return hasattr(request.user, 'teacher_profile')    
+        user = request.user
+
+        if not user or not user.is_authenticated:
+            return False
+
+        elif user.is_superuser:
+            return True
+
+        return hasattr(request.user, 'teacher_profile') 
+    
+    
+class IsStudent(permissions.BasePermission):
+    def has_permission(self, request, view):
+        user = request.user
+
+        if not user or not user.is_authenticated:
+            return False
+
+        elif user.is_superuser:
+            return True
+
+        return hasattr(user, 'student_profile')
+   
