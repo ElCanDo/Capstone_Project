@@ -17,7 +17,6 @@ This project is a **capstone project** completed in 5 parts:
 
 ### Core Features (MVP)
 - User registration & authentication (admin, teacher, student)
-- Admin can register a school
 - CRUD operations for:
   - Students
   - Teachers
