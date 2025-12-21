@@ -45,7 +45,7 @@ The database is structured based on the following core models:
 - **Classroom**: Stores classrooms with assigned teachers
 - **Enrollment**: Links students to classrooms
 
-![ERD Diagram](https://dbdiagram.io/d/SMS-ERD-Final-692ca2fdd6676488baf9a19c)
+![ERD Diagram](https://dbdiagram.io/d/School-Management-System-ERD-692b4544d6676488bae8ba7b)
 
 ---
 
