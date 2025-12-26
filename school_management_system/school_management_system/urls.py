@@ -30,3 +30,6 @@ urlpatterns = [
     path('api/register/', CustomUserRegistrationView.as_view(), name='register'),
     path('', RedirectView.as_view(url='/api/', permanent=False)),
 ]
+admin.site.site_header = "School Management System"
+admin.site.index_title = "Welcome To The Admin Panel"
+admin.site.site_title = "School Management System Admin Portal"
