@@ -15,8 +15,9 @@ path = '/home/PrinceN/Capstone_Project/school_management_system'
 if path not in sys.path:
     sys.path.append(path)
 
-from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'school_management_system.settings')
 
+
+from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

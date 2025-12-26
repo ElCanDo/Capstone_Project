@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-j6!a5qs$a0s8s3dg%ts6s=bc5o^ksa55j(rbog-@485mch@^hu
 DEBUG = False
 
 # ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.1:8000/', 'localhost']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['princen.pythonanywhere.com']
 
 
 # Application definition
@@ -80,12 +80,11 @@ WSGI_APPLICATION = 'school_management_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Using MySQL as the database engine
-        'NAME': 'school_management_system_db',
-        'USER': 'Prince',
+        'NAME': 'PrinceN$school_management_system_db',
+        'USER': 'PrinceN',
         'PASSWORD': 'Watson36@chi',
-        'HOST': 'localhost',
+        'HOST': 'PrinceN.mysql.pythonanywhere-services.com',
         'PORT': '3306',
-        
     }
 }
 
@@ -124,13 +123,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+import os
+
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'school_api.CustomUser' 
+AUTH_USER_MODEL = 'school_api.CustomUser'
 
 from datetime import timedelta
 
@@ -140,7 +142,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.permissions.IsAdminUser',
     ),
 }
 
