@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-j6!a5qs$a0s8s3dg%ts6s=bc5o^ksa55j(rbog-@485mch@^hu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.1:8000/', 'localhost']
 ALLOWED_HOSTS = []
 
 
@@ -133,9 +134,9 @@ AUTH_USER_MODEL = 'school_api.CustomUser'
 
 from datetime import timedelta
 
-REST_FRAMEWOTRK = {
+REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framewrok_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -147,3 +148,12 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
 }
+
+# CSRF_COOKIE_SECURE  
+# SESSION_COOKIE_SECURE  
+# SECURE_BROWSER_XSS_FILTER 
+# SECURE_CONTENT_TYPE_NOSNIFF 
+# SECURE_HSTS_SECONDS  31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS
+# SECURE_HSTS_PRELOAD
+# SECURE_SSL_REDIRECT
